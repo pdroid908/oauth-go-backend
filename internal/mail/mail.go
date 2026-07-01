@@ -2,19 +2,31 @@ package mail
 
 import (
 	"fmt"
-
+	"os"
+	"github.com/joho/godotenv"
 	"gopkg.in/gomail.v2"
 )
 
+func init() {
+	if err := godotenv.Load(); err != nil {
+		fmt.Println("Warning: .env file tidak ditemukan, menggunakan environment variable sistem")
+	}
+}
+
+// Host dan Port tetap const karena tidak berubah
 const (
 	SMTPHost = "smtp.gmail.com"
 	SMTPPort = 587
-
-	SMTPUser = "p1998nr@gmail.com"
-	SMTPPass = "uxgy zeox ucco ejpo"
 )
 
+// Helper untuk mengambil config
+func getSMTPCreds() (string, string) {
+	return os.Getenv("SMTP_USER"), os.Getenv("SMTP_PASS")
+}
+
 func SendVerificationEmail(email string, token string) error {
+
+	smtpUser, smtpPass := getSMTPCreds()
 
 	link := fmt.Sprintf(
 		"http://localhost:8080/verify-email?token=%s",
@@ -35,7 +47,7 @@ func SendVerificationEmail(email string, token string) error {
 
 	m := gomail.NewMessage()
 
-	m.SetHeader("From", SMTPUser)
+	m.SetHeader("From", smtpUser)
 	m.SetHeader("To", email)
 	m.SetHeader("Subject", "Verify Your Email")
 	m.SetBody("text/html", body)
@@ -43,14 +55,15 @@ func SendVerificationEmail(email string, token string) error {
 	d := gomail.NewDialer(
 		SMTPHost,
 		SMTPPort,
-		SMTPUser,
-		SMTPPass,
+		smtpUser,
+		smtpPass,
 	)
 
 	return d.DialAndSend(m)
 }
 
 func SendResetPasswordEmail(email string, token string) error {
+	smtpUser, smtpPass := getSMTPCreds()
 	// Sesuaikan URL dengan domain/endpoint reset password aplikasi Anda
 	link := fmt.Sprintf(
 		"http://localhost:3000/tampilan/reset-password?token=%s",
@@ -72,7 +85,7 @@ func SendResetPasswordEmail(email string, token string) error {
 
 	m := gomail.NewMessage()
 
-	m.SetHeader("From", SMTPUser)
+	m.SetHeader("From", smtpUser)
 	m.SetHeader("To", email)
 	m.SetHeader("Subject", "Permintaan Reset Password")
 	m.SetBody("text/html", body)
@@ -80,8 +93,8 @@ func SendResetPasswordEmail(email string, token string) error {
 	d := gomail.NewDialer(
 		SMTPHost,
 		SMTPPort,
-		SMTPUser,
-		SMTPPass,
+		smtpUser,
+		smtpPass,
 	)
 	
 
