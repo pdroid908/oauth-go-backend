@@ -66,7 +66,7 @@ func SendResetPasswordEmail(email string, token string) error {
 	smtpUser, smtpPass := getSMTPCreds()
 	// Sesuaikan URL dengan domain/endpoint reset password aplikasi Anda
 	link := fmt.Sprintf(
-		"https://huggingface.co/spaces/pasdaoiji/backend-oauth/tampilan/reset-password?token=%s",
+		"https://pasdaoji-backend-oauth.hf.space/tampilan/reset-password?token=%s",
 		token,
 	)
 
