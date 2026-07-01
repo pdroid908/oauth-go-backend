@@ -33,3 +33,4 @@ coverage.out
 # File OS (khusus kalau kamu pakai Windows/macOS)
 .DS_Store
 Thumbs.db
+mail/

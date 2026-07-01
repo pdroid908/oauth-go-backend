@@ -35,7 +35,7 @@ func main() {
 		AllowMethods:     []string{"POST", "GET", "OPTIONS", "DELETE"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
 		ExposeHeaders:    []string{"Content-Length"},
-		AllowCredentials: true, // WAJIB: agar cookie/session bisa dikirim
+		AllowCredentials: true,
 		
 	}))
 

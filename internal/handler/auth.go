@@ -195,4 +195,6 @@ err := database.DB.QueryRow(ctx, `
     DELETE FROM email_verifications
     WHERE token=$1
 `, token)
+c.Redirect(http.StatusFound, "http://localhost:3000/tampilan/login")
 }
+
