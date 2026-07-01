@@ -1,0 +1,35 @@
+# Folder biner hasil build (biasanya muncul saat 'go build')
+# Ganti 'nama-app' dengan nama output biner Anda jika spesifik
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+nama-app
+
+# Folder dependensi Go (jangan pernah di-push ke git)
+vendor/
+
+# Environment file (SANGAT PENTING: Jangan pernah push .env)
+.env
+.env.*
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# File log atau database lokal (jika ada)
+*.log
+*.db
+*.sqlite
+*.sqlite3
+
+# Folder hasil testing atau coverage
+coverage.out
+*.test
+
+# File OS (khusus kalau kamu pakai Windows/macOS)
+.DS_Store
+Thumbs.db
