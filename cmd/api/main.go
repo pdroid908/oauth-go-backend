@@ -31,7 +31,7 @@ func main() {
 	security.StartCleanupRoutine()
 
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:3000"}, // URL Frontend Anda
+		AllowOrigins:     []string{"https://netizencom.pages.dev"}, // URL Frontend Anda
 		AllowMethods:     []string{"POST", "GET", "OPTIONS", "DELETE"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
 		ExposeHeaders:    []string{"Content-Length"},
