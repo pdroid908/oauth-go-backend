@@ -29,7 +29,7 @@ func SendVerificationEmail(email string, token string) error {
 	smtpUser, smtpPass := getSMTPCreds()
 
 	link := fmt.Sprintf(
-		"http://localhost:8080/verify-email?token=%s",
+		"https://huggingface.co/spaces/pasdaoiji/backend-oauth/verify-email?token=%s",
 		token,
 	)
 
@@ -66,7 +66,7 @@ func SendResetPasswordEmail(email string, token string) error {
 	smtpUser, smtpPass := getSMTPCreds()
 	// Sesuaikan URL dengan domain/endpoint reset password aplikasi Anda
 	link := fmt.Sprintf(
-		"http://localhost:3000/tampilan/reset-password?token=%s",
+		"https://huggingface.co/spaces/pasdaoiji/backend-oauth/tampilan/reset-password?token=%s",
 		token,
 	)
 

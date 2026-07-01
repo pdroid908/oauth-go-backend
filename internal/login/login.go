@@ -94,7 +94,7 @@ func Login(c *gin.Context) {
 		3600, // 1 hour
 		"/",
 		"",
-		false, // Set ke true jika sudah pakai HTTPS
+		true, // Set ke true jika sudah pakai HTTPS
 		true,  // HttpOnly
 	)
 
