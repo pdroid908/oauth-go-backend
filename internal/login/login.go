@@ -98,5 +98,5 @@ func Login(c *gin.Context) {
 		true,  // HttpOnly
 	)
 
-	c.JSON(http.StatusOK, gin.H{"message": "login successful"})
+	c.Redirect(http.StatusFound, "https://netizencom.pages.dev/konten-utama/dashboard")
 }
