@@ -1,15 +1,15 @@
 package handler
 
 import (
-	
 	"crypto/rand"
 	"encoding/base64"
 	"encoding/json"
-	
+
 	"net/http"
 	"os"
-	"github.com/joho/godotenv"
 	"time"
+
+	"github.com/joho/godotenv"
 
 	"oauth-golang/internal/database"
 
@@ -105,15 +105,7 @@ func GoogleCallback(c *gin.Context) {
 	}
 	tokenString, _ := jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString(secret)
 
-	// 6. Set Cookie dan Response
-	c.SetCookie(
-		"token",
-		tokenString,
-		3600, // 1 hour
-		"/",
-		"",
-		false, // Set ke true jika sudah pakai HTTPS
-		true,  // HttpOnly
-	)
-	c.Redirect(http.StatusFound, "https://netizencom.pages.dev//konten-utama/dashboard")
+// Redirect langsung ke route callback di frontend Next.js dengan token di URL
+redirectURL := "https://netizencom.pages.dev/api/callback?token=" + tokenString
+c.Redirect(http.StatusFound, redirectURL)
 }
