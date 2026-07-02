@@ -36,7 +36,7 @@ func Login(c *gin.Context) {
 	// 2. SANITIZE
 	req.Username = security.Sanitize(req.Username)
 
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 
 	// 3. FETCH USER (Cari berdasarkan Username)
@@ -94,7 +94,7 @@ func Login(c *gin.Context) {
 		3600, // 1 hour
 		"/",
 		"",
-		true, // Set ke true jika sudah pakai HTTPS
+		false, // Set ke true jika sudah pakai HTTPS
 		true,  // HttpOnly
 	)
 

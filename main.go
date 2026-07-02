@@ -9,7 +9,6 @@ import (
 	"os"
 
 	"oauth-golang/internal/security"
-	"github.com/gin-contrib/cors"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -31,14 +30,7 @@ func main() {
 	r.Use(security.SecurityStack()...)
 	security.StartCleanupRoutine()
 
-	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"https://netizencom.pages.dev"}, // URL Frontend Anda
-		AllowMethods:     []string{"POST", "GET", "OPTIONS", "DELETE"},
-		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
-		ExposeHeaders:    []string{"Content-Length"},
-		AllowCredentials: true,
-		
-	}))
+	r.Use(security.Cors())
 
 	// LOGIN REGISTER RESET PASS
 
@@ -53,7 +45,7 @@ func main() {
 	
 	
 
-	r.GET("/health", func(c *gin.Context) {
+	r.GET("/", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"status": "ok",
 		})

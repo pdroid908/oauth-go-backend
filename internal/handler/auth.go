@@ -77,7 +77,7 @@ func Register(c *gin.Context) {
 	`, req.Email).Scan(&exists)
 
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "db error"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "db error","details": err.Error(),})
 		return
 	}
 

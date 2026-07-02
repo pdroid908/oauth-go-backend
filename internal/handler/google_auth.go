@@ -108,5 +108,5 @@ func GoogleCallback(c *gin.Context) {
 	// 6. Set Cookie dan Response
 	c.SetCookie("token", tokenString, 3600, "/", "", false, true)
 	
-	c.Redirect(http.StatusFound, "https://netizencom.pages.dev/konten-utama/dashboard")
+	c.Redirect(http.StatusFound, "https://netizencom.pages.dev//konten-utama/dashboard")
 }

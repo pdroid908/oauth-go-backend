@@ -6,6 +6,8 @@ import (
 	"os"
 	"time"
 
+	"github.com/jackc/pgx/v5"
+
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -18,10 +20,21 @@ func Connect() {
 		log.Fatal("DATABASE_URL is not set")
 	}
 
+	// 1. Parse konfigurasi terlebih dahulu
+	config, err := pgxpool.ParseConfig(databaseURL)
+	if err != nil {
+		log.Fatalf("Failed to parse config: %v", err)
+	}
+
+	// 2. PAKSA MENGGUNAKAN SIMPLE PROTOCOL
+	// Ini akan menonaktifkan caching prepared statement yang menyebabkan error 42P05
+	config.ConnConfig.DefaultQueryExecMode = pgx.QueryExecModeSimpleProtocol
+
+	// 3. Buat pool dengan konfigurasi yang sudah dimodifikasi
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	pool, err := pgxpool.New(ctx, databaseURL)
+	pool, err := pgxpool.NewWithConfig(ctx, config)
 	if err != nil {
 		log.Fatalf("Failed to create connection pool: %v", err)
 	}
@@ -32,8 +45,7 @@ func Connect() {
 	}
 
 	DB = pool
-
-	log.Println("✅ PostgreSQL connected")
+	log.Println("✅ PostgreSQL connected (Simple Protocol enabled)")
 }
 
 // Close menutup koneksi database.

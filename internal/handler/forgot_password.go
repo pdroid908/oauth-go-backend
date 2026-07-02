@@ -65,6 +65,7 @@ func ForgotPassword(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"message": "Reset link sent"})
+    c.Redirect(http.StatusFound, "https://netizencom.pages.dev/tampilan/reset-password")
 }
 
 
@@ -137,4 +138,6 @@ func ResetPassword(c *gin.Context) {
     }
 
     c.JSON(http.StatusOK, gin.H{"message": "Password updated successfully"})
+    c.Redirect(http.StatusFound, "https://netizencom.pages.dev/tampilan/login")
+    
 }

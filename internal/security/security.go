@@ -98,11 +98,30 @@ func SecurityHeaders() gin.HandlerFunc {
 
 func Cors() gin.HandlerFunc {
 	return cors.New(cors.Config{
-		AllowOrigins:     []string{"https://netizencom.pages.dev"},
-		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
-		AllowHeaders:     []string{"Authorization", "Content-Type"},
+		AllowOrigins: []string{
+			"http://localhost:3000",
+			"http://localhost:8080",
+			"https://netizencom.pages.dev",
+		},
+		AllowMethods: []string{
+			"GET",
+			"POST",
+			"PUT",
+			"PATCH",
+			"DELETE",
+			"OPTIONS",
+		},
+		AllowHeaders: []string{
+			"Origin",
+			"Content-Type",
+			"Authorization",
+		},
+		ExposeHeaders: []string{
+			"Content-Length",
+		},
 		AllowCredentials: true,
 		MaxAge:           12 * time.Hour,
+		
 	})
 }
 
