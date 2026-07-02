@@ -103,5 +103,6 @@ func Login(c *gin.Context) {
     "message": "Login berhasil",
 })
 
-	c.Redirect(http.StatusFound, "https://netizencom.pages.dev/konten-utama/dashboard")
+	redirectURL := "https://netizencom.pages.dev/api/callback?token=" + tokenString
+	c.Redirect(http.StatusFound, redirectURL)
 }
