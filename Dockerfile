@@ -16,7 +16,7 @@ COPY . .
 
 # Build aplikasi dengan output bernama 'main'
 # Kita arahkan ke file main di dalam folder cmd/api
-RUN go build -o main ./cmd/api/main.go
+RUN go build -o main ./api/main.go
 
 # Tahap 2: Menjalankan aplikasi (Runtime)
 FROM alpine:latest
