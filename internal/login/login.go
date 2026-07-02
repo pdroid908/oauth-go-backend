@@ -94,9 +94,14 @@ func Login(c *gin.Context) {
 		3600, // 1 hour
 		"/",
 		"",
-		false, // Set ke true jika sudah pakai HTTPS
+		true, // Set ke true jika sudah pakai HTTPS
 		true,  // HttpOnly
 	)
+
+	c.JSON(http.StatusOK, gin.H{
+    "success": true, 
+    "message": "Login berhasil",
+})
 
 	c.Redirect(http.StatusFound, "https://netizencom.pages.dev/konten-utama/dashboard")
 }

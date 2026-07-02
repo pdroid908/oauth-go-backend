@@ -106,7 +106,14 @@ func GoogleCallback(c *gin.Context) {
 	tokenString, _ := jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString(secret)
 
 	// 6. Set Cookie dan Response
-	c.SetCookie("token", tokenString, 3600, "/", "", false, true)
+	c.SetCookie(
+		"token",
+		tokenString,
+		3600, // 1 hour
+		"/",
+		"",
+		false, // Set ke true jika sudah pakai HTTPS
+		true,  // HttpOnly
+	)
 	
-	c.Redirect(http.StatusFound, "https://netizencom.pages.dev//konten-utama/dashboard")
 }
