@@ -107,6 +107,6 @@ func GoogleCallback(c *gin.Context) {
 
 	// 6. Set Cookie dan Response
 	c.SetCookie("token", tokenString, 3600, "/", "", false, true)
-	c.JSON(http.StatusOK, gin.H{"message": "Login successful", "token": tokenString})
+	
 	c.Redirect(http.StatusFound, "https://netizencom.pages.dev/konten-utama/dashboard")
 }
