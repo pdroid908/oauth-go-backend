@@ -84,7 +84,7 @@ func SecurityStack() []gin.HandlerFunc {
 
 func SecurityHeaders() gin.HandlerFunc {
 	return secure.New(secure.Config{
-		FrameDeny:             true,
+		FrameDeny:             false,
 		ContentTypeNosniff:    true,
 		BrowserXssFilter:      true,
 		ReferrerPolicy:        "strict-origin-when-cross-origin",
