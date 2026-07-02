@@ -6,6 +6,7 @@ import (
 	"oauth-golang/internal/database"
 	"oauth-golang/internal/handler"
 	"oauth-golang/internal/login"
+	"os"
 
 	"oauth-golang/internal/security"
 	"github.com/gin-contrib/cors"
@@ -58,6 +59,13 @@ func main() {
 		})
 	})
 
-	log.Println("🚀 Server running on :8080")
-	r.Run(":8080")
+port := os.Getenv("PORT")
+    if port == "" {
+        port = "8080" // Default untuk pengembangan lokal
+    }
+
+    log.Printf("🚀 Server running on port %s", port)
+    
+    // Gunakan port tersebut untuk menjalankan server
+    r.Run(":" + port)
 }
