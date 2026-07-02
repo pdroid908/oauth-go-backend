@@ -3,100 +3,52 @@ package mail
 import (
 	"fmt"
 	"os"
+
 	"github.com/joho/godotenv"
-	"gopkg.in/gomail.v2"
+	"github.com/resend/resend-go/v2"
 )
 
 func init() {
 	if err := godotenv.Load(); err != nil {
-		fmt.Println("Warning: .env file tidak ditemukan, menggunakan environment variable sistem")
+		fmt.Println("Warning: .env file tidak ditemukan")
 	}
 }
 
-// Host dan Port tetap const karena tidak berubah
-const (
-	SMTPHost = "smtp.gmail.com"
-	SMTPPort = 587
-)
-
-// Helper untuk mengambil config
-func getSMTPCreds() (string, string) {
-	return os.Getenv("SMTP_USER"), os.Getenv("SMTP_PASS")
+// Fungsi helper untuk inisialisasi client Resend
+func getResendClient() *resend.Client {
+	return resend.NewClient(os.Getenv("RE_API_KEY"))
 }
 
 func SendVerificationEmail(email string, token string) error {
+	client := getResendClient()
 
-	smtpUser, smtpPass := getSMTPCreds()
+	link := fmt.Sprintf("https://tujuan-baru-kamu.com/verify-email?token=%s", token)
+	body := fmt.Sprintf(`<h2>Verify Email</h2><p>Klik tombol berikut:</p><a href="%s">Verify Email</a>`, link)
 
-	link := fmt.Sprintf(
-		"https://huggingface.co/spaces/pasdaoiji/backend-oauth/verify-email?token=%s",
-		token,
-	)
+	params := &resend.SendEmailRequest{
+		From:    "onboarding@resend.dev", // Atau domain terverifikasi kamu
+		To:      []string{email},
+		Subject: "Verify Your Email",
+		Html:    body,
+	}
 
-	body := fmt.Sprintf(`
-<h2>Verify Email</h2>
-
-<p>Terima kasih sudah mendaftar.</p>
-
-<p>Silakan klik tombol berikut:</p>
-
-<a href="%s">Verify Email</a>
-
-<p>Link berlaku 15 menit.</p>
-`, link)
-
-	m := gomail.NewMessage()
-
-	m.SetHeader("From", smtpUser)
-	m.SetHeader("To", email)
-	m.SetHeader("Subject", "Verify Your Email")
-	m.SetBody("text/html", body)
-
-	d := gomail.NewDialer(
-		SMTPHost,
-		SMTPPort,
-		smtpUser,
-		smtpPass,
-	)
-
-	return d.DialAndSend(m)
+	_, err := client.Emails.Send(params)
+	return err
 }
 
 func SendResetPasswordEmail(email string, token string) error {
-	smtpUser, smtpPass := getSMTPCreds()
-	// Sesuaikan URL dengan domain/endpoint reset password aplikasi Anda
-	link := fmt.Sprintf(
-		"https://pasdaoji-backend-oauth.hf.space/tampilan/reset-password?token=%s",
-		token,
-	)
+	client := getResendClient()
 
-	body := fmt.Sprintf(`
-<h2>Reset Password</h2>
+	link := fmt.Sprintf("https://tujuan-baru-kamu.com/reset-password?token=%s", token)
+	body := fmt.Sprintf(`<h2>Reset Password</h2><p>Klik tautan berikut:</p><a href="%s">Reset Password</a>`, link)
 
-<p>Kami menerima permintaan untuk mereset password akun Anda.</p>
+	params := &resend.SendEmailRequest{
+		From:    "onboarding@resend.dev",
+		To:      []string{email},
+		Subject: "Permintaan Reset Password",
+		Html:    body,
+	}
 
-<p>Silakan klik tautan di bawah ini untuk mengatur password baru:</p>
-
-<a href="%s">Reset Password</a>
-
-<p>Link ini hanya berlaku untuk 1 jam ke depan.</p>
-<p>Jika Anda tidak merasa melakukan permintaan ini, silakan abaikan email ini.</p>
-`, link)
-
-	m := gomail.NewMessage()
-
-	m.SetHeader("From", smtpUser)
-	m.SetHeader("To", email)
-	m.SetHeader("Subject", "Permintaan Reset Password")
-	m.SetBody("text/html", body)
-
-	d := gomail.NewDialer(
-		SMTPHost,
-		SMTPPort,
-		smtpUser,
-		smtpPass,
-	)
-	
-
-	return d.DialAndSend(m)
+	_, err := client.Emails.Send(params)
+	return err
 }
