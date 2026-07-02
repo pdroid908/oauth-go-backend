@@ -115,5 +115,5 @@ func GoogleCallback(c *gin.Context) {
 		false, // Set ke true jika sudah pakai HTTPS
 		true,  // HttpOnly
 	)
-	
+	c.Redirect(http.StatusFound, "https://netizencom.pages.dev//konten-utama/dashboard")
 }
