@@ -27,7 +27,7 @@ func init() {
     googleOauthConfig = &oauth2.Config{
         ClientID:     os.Getenv("GOOGLE_CLIENT_ID"),
         ClientSecret: os.Getenv("GOOGLE_CLIENT_SECRET"),
-        RedirectURL:  "https://oauth-go-backend.vercel.app/auth/google/callback",
+        RedirectURL:  "https://oauth-go-backend-one.vercel.app/auth/google/callback",
         Scopes: []string{
             "https://www.googleapis.com/auth/userinfo.email",
             "https://www.googleapis.com/auth/userinfo.profile",
