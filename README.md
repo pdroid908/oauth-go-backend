@@ -1,213 +1,99 @@
 # 🔐 OAuth Go Backend
 
-A secure and scalable OAuth authentication backend built with **Go**. This project provides authentication services, OAuth integration, JWT-based authorization, session management, and RESTful APIs for modern web applications.
+A secure authentication service built with **Go** that provides OAuth authentication, session management, and REST APIs for modern web applications.
 
-Designed with clean architecture principles, this backend is intended to work alongside a separate frontend application while keeping authentication and sensitive credentials securely managed on the server.
+The backend authenticates users, stores sessions securely using **HTTP-only cookies**, and exposes protected endpoints for authenticated clients.
 
-> **Status:** 🚧 Under Development
+## Features
 
----
+- OAuth Authentication
+- Email & Password Authentication
+- JWT Authentication
+- HTTP-only Cookie Sessions
+- Refresh Token
+- User Registration
+- Protected APIs
+- PostgreSQL Integration
+- Redis Session Storage
+- RESTful API
 
-# ✨ Features
+## Tech Stack
 
-- 🔑 OAuth Authentication
-- 🔐 JWT Access & Refresh Tokens
-- 👤 User Authentication
-- 🛡️ Secure Password Hashing
-- 🔄 Token Refresh Flow
-- 🚪 Logout & Session Invalidation
-- 📦 RESTful API
-- ⚡ High Performance with Go
-- 🗄 PostgreSQL Integration
-- ⚙️ Environment-based Configuration
+- Go
+- PostgreSQL
+- JWT
+- OAuth 2.0
+- Docker
 
----
+## Authentication Flow
 
-# 🛠 Tech Stack
+```text
+Frontend
+    │
+    ▼
+OAuth Go Backend
+    │
+    ├── Validate Credentials
+    ├── Generate JWT
+    ├── Store Refresh Token
+    ├── Set HTTP-only Cookie
+    ▼
+Authenticated User
+```
 
-| Technology | Purpose |
-|------------|---------|
-| Go | Backend Language |
-| Gin / Fiber |
-| PostgreSQL | Database |
-| Cache & Session Storage |
-| JWT | Authentication |
-| OAuth 2.0 | Authorization |
-| Docker | Containerization |
-| Docker Compose | Local Development |
+## Security
 
----
+- HTTP-only Cookies
+- Secure Cookie Configuration
+- Password Hashing (bcrypt)
+- JWT Authentication
+- Refresh Token Rotation
+- Input Validation
+- SQL Injection Protection
+- CORS Configuration
 
-# 🚀 Getting Started
+## API
 
-## Clone the repository
+| Method | Endpoint |
+|---------|----------|
+| POST | /login |
+| POST | /register |
+| POST | /logout |
+| POST | /refresh |
+| GET | /me |
+
+## Getting Started
 
 ```bash
 git clone https://github.com/pdroid908/oauth-go-backend.git
-```
 
-Move into the project
-
-```bash
 cd oauth-go-backend
-```
 
-Install dependencies
-
-```bash
 go mod tidy
+
+go run main.go
 ```
 
-Run the application
+## Environment
 
-```bash
-go run cmd/main.go
+```env
+PORT=8080
+
+DATABASE_URL=
+
+JWT_SECRET=
+
+REDIS_URL=
 ```
 
----
+## Frontend
 
-# 🐳 Docker
+Frontend repository:
 
-Start all services
+https://github.com/pdroid908/frontend-oauth
 
-```bash
-docker compose up --build
-```
-
-Stop services
-
-```bash
-docker compose down
-```
-
----
-
-# 🔐 Authentication Flow
-
-```
-User
- │
- ▼
-Frontend
- │
- ▼
-OAuth Provider
- │
- ▼
-OAuth Go Backend
- │
- ├── Verify OAuth Identity
- ├── Create or Find User
- ├── Generate JWT
- ├── Store Refresh Token
- └── Return Authentication Response
- │
- ▼
-Frontend
-```
-
----
-
-# 📡 API Endpoints
-
-| Method | Endpoint | Description |
-|---------|----------|-------------|
-| GET | /auth/google | Google OAuth Login |
-| GET | /auth/github | GitHub OAuth Login |
-| GET | /auth/callback | OAuth Callback |
-| POST | /auth/login | Email Login |
-| POST | /auth/register | Register |
-| POST | /auth/refresh | Refresh Access Token |
-| POST | /auth/logout | Logout |
-| GET | /user/profile | Current User |
-
----
-
-# 🔒 Security
-
-This project follows common backend security practices, including:
-
-- Password hashing using bcrypt
-- JWT Authentication
-- Refresh Token rotation
-- Environment variable configuration
-- Protected API routes
-- Input validation
-- SQL Injection prevention through parameterized queries
-- Secure OAuth flow
-- CORS configuration
-- HTTP security headers
-
----
-
-# 📈 Roadmap
-
-- [ ] Google OAuth
-- [ ] GitHub OAuth
-- [ ] Email & Password Login
-- [ ] JWT Authentication
-- [ ] Refresh Tokens
-- [ ] Role-Based Access Control (RBAC)
-- [ ] Email Verification
-- [ ] Password Reset
-- [ ] Docker Deployment
-- [ ] Swagger Documentation
-- [ ] Unit Testing
-- [ ] Integration Testing
-- [ ] Rate Limiting
-- [ ] Audit Logging
-
----
-
-# 🧪 Testing
-
-Run all tests
-
-```bash
-go test ./...
-```
-
----
-
-# 🌐 Related Projects
-
-| Project | Description |
-|---------|-------------|
-| Frontend OAuth | Next.js frontend client |
-| OAuth Go Backend | Authentication API |
-
----
-
-# 👨‍💻 Author
+## Author
 
 **Putra Rohman**
 
-Backend Developer passionate about building secure, scalable, and maintainable backend systems.
-
-### Core Skills
-
-- Go
-- REST API
-- OAuth 2.0
-- JWT
-- PostgreSQL
-- Docker
-- TypeScript
-- Next.js
-- Clean Architecture
-
-GitHub
-
-https://github.com/pdroid908
-
----
-
-# ⭐ Support
-
-If you find this project useful, consider giving it a ⭐ on GitHub.
-
----
-
-## License
-
-Licensed under the MIT License.
+Backend Developer specializing in Go, TypeScript, PostgreSQL, Redis, Docker, and REST APIs.
